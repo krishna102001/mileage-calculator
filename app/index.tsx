@@ -38,6 +38,15 @@ export default function Index() {
     return;
   };
 
+  const handleReset = () => {
+    setVal({
+      dist: "",
+      fuel: "",
+      fuelPrice: "",
+    });
+    setResult(undefined);
+  };
+
   return (
     <>
       <View className='flex-1 justify-start py-10 bg-black'>
@@ -61,7 +70,10 @@ export default function Index() {
             value={val.fuelPrice}
             onChangeText={(text: string) => setVal({ ...val, fuelPrice: text })}
           />
-          <CustomeButton onPress={handleLogic} />
+          <View className='flex-row'>
+            <CustomeButton onPress={handleLogic} btntxt='Calculate' />
+            <CustomeButton onPress={handleReset} btntxt='Clear' reset={true} />
+          </View>
         </View>
         {result !== undefined && (
           <View className='flex justify-center items-center'>
