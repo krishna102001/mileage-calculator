@@ -3,10 +3,10 @@ import HeaderTitle from "@/components/HeaderTitle";
 import InputField from "@/components/InputField";
 import TableDetails from "@/components/TableDetails";
 import { useState } from "react";
-import { View } from "react-native";
+import { Keyboard, View } from "react-native";
 import "./global.css";
 
-export interface resultInterface {
+interface resultInterface {
   mileage: number;
   totalFuelCost: number;
   fuelCostPerKm: number;
@@ -34,6 +34,7 @@ export default function Index() {
         totalFuelCost: parseFloat(totalFuelCost.toFixed(2)),
         fuelCostPerKm: parseFloat(fuelCostPerKm.toFixed(2)),
       });
+      Keyboard.dismiss();
     }
     return;
   };
@@ -49,7 +50,7 @@ export default function Index() {
 
   return (
     <>
-      <View className='flex-1 justify-start py-10 bg-black'>
+      <View className='flex-1 justify-start py-10 bg-gray-700'>
         <HeaderTitle title='Mileage Calculator' />
         <View className='flex-col my-2 gap-4'>
           <InputField
@@ -76,7 +77,7 @@ export default function Index() {
           </View>
         </View>
         {result !== undefined && (
-          <View className='flex justify-center items-center'>
+          <View className='flex justify-center items-center mt-4'>
             <TableDetails
               dist={val.dist}
               fuel={val.fuel}
