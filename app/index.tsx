@@ -1,11 +1,12 @@
 import CustomeButton from "@/components/CustomeButton";
 import HeaderTitle from "@/components/HeaderTitle";
 import InputField from "@/components/InputField";
+import TableDetails from "@/components/TableDetails";
 import { useState } from "react";
 import { View } from "react-native";
 import "./global.css";
 
-interface resultInterface {
+export interface resultInterface {
   mileage: number;
   totalFuelCost: number;
   fuelCostPerKm: number;
@@ -18,20 +19,23 @@ export default function Index() {
     fuelPrice: "",
   });
 
-  const [result, setResult] = useState<resultInterface | undefined>();
+  const [result, setResult] = useState<resultInterface | undefined>(undefined);
 
   const handleLogic = () => {
-    const distNum = parseFloat(val.dist);
-    const fuelNum = parseFloat(val.fuel);
-    const fuelPriceNum = parseFloat(val.fuelPrice);
-    const mileage = distNum / fuelNum;
-    const totalFuelCost = (distNum / mileage) * fuelPriceNum;
-    const fuelCostPerKm = totalFuelCost / distNum;
-    setResult({
-      mileage: parseFloat(mileage.toPrecision(2)),
-      totalFuelCost: parseFloat(totalFuelCost.toPrecision(2)),
-      fuelCostPerKm: parseFloat(fuelCostPerKm.toPrecision(2)),
-    });
+    const distNum = val.dist !== "" && parseFloat(val.dist);
+    const fuelNum = val.fuel !== "" && parseFloat(val.fuel);
+    const fuelPriceNum = val.fuelPrice && parseFloat(val.fuelPrice);
+    if (distNum && fuelNum && fuelPriceNum) {
+      const mileage = distNum / fuelNum;
+      const totalFuelCost = (distNum / mileage) * fuelPriceNum;
+      const fuelCostPerKm = totalFuelCost / distNum;
+      setResult({
+        mileage: parseFloat(mileage.toPrecision(2)),
+        totalFuelCost: parseFloat(totalFuelCost.toPrecision(2)),
+        fuelCostPerKm: parseFloat(fuelCostPerKm.toPrecision(2)),
+      });
+    }
+    return;
   };
 
   return (
@@ -59,6 +63,17 @@ export default function Index() {
           />
           <CustomeButton onPress={handleLogic} />
         </View>
+        {result !== undefined && (
+          <View className='flex justify-center items-center'>
+            <TableDetails
+              dist={val.dist}
+              fuel={val.fuel}
+              mile={result.mileage}
+              tfc={result.totalFuelCost}
+              fcpk={result.fuelCostPerKm}
+            />
+          </View>
+        )}
       </View>
     </>
   );
