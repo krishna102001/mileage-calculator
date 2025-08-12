@@ -30,9 +30,9 @@ export default function Index() {
       const totalFuelCost = (distNum / mileage) * fuelPriceNum;
       const fuelCostPerKm = totalFuelCost / distNum;
       setResult({
-        mileage: parseFloat(mileage.toPrecision(2)),
-        totalFuelCost: parseFloat(totalFuelCost.toPrecision(2)),
-        fuelCostPerKm: parseFloat(fuelCostPerKm.toPrecision(2)),
+        mileage: parseFloat(mileage.toFixed(2)),
+        totalFuelCost: parseFloat(totalFuelCost.toFixed(2)),
+        fuelCostPerKm: parseFloat(fuelCostPerKm.toFixed(2)),
       });
     }
     return;
