@@ -2,6 +2,9 @@ import CustomeButton from "@/components/CustomeButton";
 import HeaderTitle from "@/components/HeaderTitle";
 import InputField from "@/components/InputField";
 import TableDetails from "@/components/TableDetails";
+import * as schema from "@/db/schema";
+import { drizzle } from "drizzle-orm/expo-sqlite";
+import { useSQLiteContext } from "expo-sqlite";
 import { useState } from "react";
 import { Keyboard, View } from "react-native";
 import "./global.css";
@@ -21,6 +24,9 @@ export default function Index() {
 
   const [result, setResult] = useState<resultInterface | undefined>(undefined);
 
+  const db = useSQLiteContext();
+  const drizzleDb = drizzle(db, { schema });
+
   const handleLogic = () => {
     const distNum = val.dist !== "" && parseFloat(val.dist);
     const fuelNum = val.fuel !== "" && parseFloat(val.fuel);
@@ -33,6 +39,14 @@ export default function Index() {
         mileage: parseFloat(mileage.toFixed(2)),
         totalFuelCost: parseFloat(totalFuelCost.toFixed(2)),
         fuelCostPerKm: parseFloat(fuelCostPerKm.toFixed(2)),
+      });
+      drizzleDb.insert(schema.milehistory).values({
+        distance: String(val.dist),
+        fuel: String(val.fuel),
+        fuelprice: String(val.fuelPrice),
+        totalfuelcost: String(result?.totalFuelCost),
+        fuelcostperkm: String(result?.fuelCostPerKm),
+        mileage: String(result?.mileage),
       });
       Keyboard.dismiss();
     }

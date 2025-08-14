@@ -1,7 +1,16 @@
+import migrations from "@/drizzle/migrations";
+import { drizzle } from "drizzle-orm/expo-sqlite";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
+import { openDatabaseSync, SQLiteProvider } from "expo-sqlite";
 import { StatusBar } from "react-native";
 
+export const DATABASE_NAME = "milehistory";
+
 export default function RootLayout() {
+  const expoDb = openDatabaseSync(DATABASE_NAME);
+  const db = drizzle(expoDb);
+  const { success, error } = useMigrations(db, migrations);
   return (
     <>
       {/* <StatusBar hidden={true} /> hide the date and percentage */}
@@ -10,9 +19,14 @@ export default function RootLayout() {
         backgroundColor='transparent'
         translucent={true}
       />
-      <Stack>
-        <Stack.Screen name='index' options={{ headerShown: false }} />
-      </Stack>
+      <SQLiteProvider
+        databaseName={DATABASE_NAME}
+        options={{ enableChangeListener: true }}
+      >
+        <Stack>
+          <Stack.Screen name='index' options={{ headerShown: false }} />
+        </Stack>
+      </SQLiteProvider>
     </>
   );
 }
