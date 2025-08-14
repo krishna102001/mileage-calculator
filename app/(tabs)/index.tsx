@@ -27,7 +27,7 @@ export default function Index() {
   const db = useSQLiteContext();
   const drizzleDb = drizzle(db, { schema });
 
-  const handleLogic = () => {
+  const handleLogic = async () => {
     const distNum = val.dist !== "" && parseFloat(val.dist);
     const fuelNum = val.fuel !== "" && parseFloat(val.fuel);
     const fuelPriceNum = val.fuelPrice && parseFloat(val.fuelPrice);
@@ -40,13 +40,13 @@ export default function Index() {
         totalFuelCost: parseFloat(totalFuelCost.toFixed(2)),
         fuelCostPerKm: parseFloat(fuelCostPerKm.toFixed(2)),
       });
-      drizzleDb.insert(schema.milehistory).values({
+      await drizzleDb.insert(schema.milehistory).values({
         distance: String(val.dist),
         fuel: String(val.fuel),
         fuelprice: String(val.fuelPrice),
-        totalfuelcost: String(result?.totalFuelCost),
-        fuelcostperkm: String(result?.fuelCostPerKm),
-        mileage: String(result?.mileage),
+        totalfuelcost: totalFuelCost.toFixed(2),
+        fuelcostperkm: fuelCostPerKm.toFixed(2),
+        mileage: mileage.toFixed(2),
       });
       Keyboard.dismiss();
     }
