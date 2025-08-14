@@ -1,0 +1,1 @@
+ALTER TABLE `milehistory` ADD `fuelprice` text NOT NULL;
