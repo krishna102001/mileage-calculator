@@ -24,7 +24,7 @@ export default function RootLayout() {
         options={{ enableChangeListener: true }}
       >
         <Stack>
-          <Stack.Screen name='index' options={{ headerShown: false }} />
+          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         </Stack>
       </SQLiteProvider>
     </>

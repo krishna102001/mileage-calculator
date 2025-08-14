@@ -7,7 +7,7 @@ import { drizzle } from "drizzle-orm/expo-sqlite";
 import { useSQLiteContext } from "expo-sqlite";
 import { useState } from "react";
 import { Keyboard, View } from "react-native";
-import "./global.css";
+import "../global.css";
 
 interface resultInterface {
   mileage: number;
