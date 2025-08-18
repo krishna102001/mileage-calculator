@@ -7,9 +7,9 @@
     "icon": "./assets/images/logo.png",
     "scheme": "mileagecalculator",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.krock12345.mileagecalculator"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,21 +35,7 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      [
-      "expo-sqlite",{
-          "enableFTS": true,
-          "useSQLCipher": true,
-          "android": {
-            // Override the shared configuration for Android
-            "enableFTS": false,
-            "useSQLCipher": false
-          },
-          "ios": {
-            // You can also override the shared configurations for iOS
-            "customBuildFlags": ["-DSQLITE_ENABLE_DBSTAT_VTAB=1 -DSQLITE_ENABLE_SNAPSHOT=1"]
-          }
-        }
-      ]
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true

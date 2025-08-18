@@ -2,14 +2,13 @@ import migrations from "@/drizzle/migrations";
 import { drizzle } from "drizzle-orm/expo-sqlite";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
-import { openDatabaseSync, SQLiteProvider } from "expo-sqlite";
+import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { StatusBar } from "react-native";
 
 export const DATABASE_NAME = "milehistory";
 
 export default function RootLayout() {
-  const expoDb = openDatabaseSync(DATABASE_NAME);
-  const db = drizzle(expoDb);
+  const db = drizzle(useSQLiteContext());
   const { success, error } = useMigrations(db, migrations);
   return (
     <>
