@@ -7,9 +7,20 @@ import { StatusBar } from "react-native";
 
 export const DATABASE_NAME = "milehistory";
 
-export default function RootLayout() {
+function Database_Initializer() {
   const db = drizzle(useSQLiteContext());
   const { success, error } = useMigrations(db, migrations);
+  if (error) {
+    console.log("migration error :", error);
+  }
+  return (
+    <Stack>
+      <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+    </Stack>
+  );
+}
+
+export default function RootLayout() {
   return (
     <>
       {/* <StatusBar hidden={true} /> hide the date and percentage */}
@@ -22,9 +33,7 @@ export default function RootLayout() {
         databaseName={DATABASE_NAME}
         options={{ enableChangeListener: true }}
       >
-        <Stack>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-        </Stack>
+        <Database_Initializer />
       </SQLiteProvider>
     </>
   );
