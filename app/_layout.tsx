@@ -4,7 +4,7 @@ import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
 import { SQLiteProvider, useSQLiteContext } from "expo-sqlite";
 import { useEffect } from "react";
-import { StatusBar } from "react-native";
+import { Alert, StatusBar } from "react-native";
 
 export const DATABASE_NAME = "milehistory";
 
@@ -14,10 +14,24 @@ function Database_Initializer() {
 
   useEffect(() => {
     if (error) {
-      console.error("Migration error:", error);
+      Alert.alert("Migration error", `${error}`, [
+        {
+          text: "OK",
+          onPress: () => {
+            console.log("ok");
+          },
+        },
+      ]);
     }
     if (success) {
-      console.log("Migrations completed successfully");
+      Alert.alert("Migration Successfull", "acche se chal raha hain", [
+        {
+          text: "OK",
+          onPress: () => {
+            console.log("ok");
+          },
+        },
+      ]);
     }
   }, [success, error]);
 
